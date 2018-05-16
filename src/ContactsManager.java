@@ -89,6 +89,13 @@ public class ContactsManager {
             System.out.println(name);
         }
     }
+
+    private static String readLines (String directory,String filename, String name) throws IOException {
+        Path filepath = Paths.get(directory, filename);
+        List<String> list = Files.readAllLines(filepath);
+
+
+    }
     private static ArrayList<String> createContact() {
         ArrayList<String> list = new ArrayList<>();
         Input input = new Input();
@@ -106,7 +113,7 @@ public class ContactsManager {
 
     private static void searchbyName(String directory, String filename) {
         String userName = getString();
-        if (userName.equalsIgnoreCase()) {
+        if (userName.equalsIgnoreCase(list)) {
             System.out.println(userName);
         }else
             System.out.println("Contact not found");
