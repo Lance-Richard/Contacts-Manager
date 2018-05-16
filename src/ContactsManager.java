@@ -28,10 +28,10 @@ public class ContactsManager {
         if(select == 1){
             System.out.println(filename);
         }
-//        createFileIfNonExists(directory, filename);
+        createFileIfNoneExists(directory, filename);
     }
 
-    private static void createFileIfNonExists(String directory, String filename) {
+    private static void createFileIfNoneExists(String directory, String filename) {
         ArrayList<String> names = makeList();
         try{
             writeListToFile(names, directory, filename);
