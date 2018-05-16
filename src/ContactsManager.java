@@ -31,13 +31,24 @@ public class ContactsManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(filename);
+//            System.out.println(filename);
         }
-        createFileIfNoneExists(directory, filename);
+        if(select == 2){
+            createContact();
+        }
+        if(select == 3){
+            searchbyName(directory, filename);
+            try {
+                readLines(directory, filename);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+//        createFileIfNoneExists(directory, filename);
     }
 
     private static void createFileIfNoneExists(String directory, String filename) {
-        ArrayList<String> names = makeList();
+        ArrayList<String> names = createContact();
         try{
             writeListToFile(names, directory, filename);
         } catch(IOException e){
@@ -78,7 +89,7 @@ public class ContactsManager {
             System.out.println(name);
         }
     }
-    private static ArrayList<String> makeList() {
+    private static ArrayList<String> createContact() {
         ArrayList<String> list = new ArrayList<>();
         Input input = new Input();
         String name;
@@ -92,4 +103,19 @@ public class ContactsManager {
         }while(input.yesNo("Do you want to add another name and number"));
         return list;
     }
-}
+
+    private static void searchbyName(String directory, String filename) {
+        String userName = getString();
+        if (userName.equalsIgnoreCase()) {
+            System.out.println(userName);
+        }else
+            System.out.println("Contact not found");
+    }
+
+    private static String getString() {
+        Input input = new Input();
+        String userName = input.getString("Please enter a contact name");
+        return userName;
+    }
+
+    }

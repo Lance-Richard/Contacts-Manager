@@ -11,7 +11,7 @@ public class Input {
         this.scanner = new Scanner(System.in).useDelimiter("\n");
     }
 
-    public String getString(String prompt){
+    public  String getString(String prompt){
         String input;
         System.out.println(prompt);
         input = this.scanner.nextLine();
