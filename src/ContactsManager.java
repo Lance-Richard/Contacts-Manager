@@ -7,11 +7,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import util.Input;
 
 public class ContactsManager {
+
+    public static ArrayList<Contact> newArrayList = new ArrayList<>();
+
     public static void main(String[] args) {
         String directory = "data";
         String filename = "contacts.txt";
@@ -37,9 +39,8 @@ public class ContactsManager {
             createContact();
         }
         if(select == 3){
-            searchbyName(directory, filename);
             try {
-                readLines(directory, filename);
+                searchByName(directory, filename);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -47,7 +48,7 @@ public class ContactsManager {
 //        createFileIfNoneExists(directory, filename);
     }
 
-    private static void createFileIfNoneExists(String directory, String filename) {
+    public static void createFileIfNoneExists(String directory, String filename) {
         ArrayList<String> names = createContact();
         try{
             writeListToFile(names, directory, filename);
@@ -77,12 +78,12 @@ public class ContactsManager {
         }
     }
 
-    private static void writeListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
+    public static void writeListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         Files.write(filepath, names, StandardOpenOption.APPEND);
     }
 
-    private static void readLines(String directory, String filename) throws IOException{
+    public static void readLines(String directory, String filename) throws IOException{
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
         for(String name : list){
@@ -90,36 +91,40 @@ public class ContactsManager {
         }
     }
 
-    private static String readLines (String directory,String filename, String name) throws IOException {
+    public static List<String> createList (String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
-
-
+        for(String line: list){
+            System.out.println(line);
+        }
+        return list;
     }
-    private static ArrayList<String> createContact() {
+    public static ArrayList<String> createContact() {
         ArrayList<String> list = new ArrayList<>();
         Input input = new Input();
         String name;
         String phoneNumber;
         do {
             name = input.getString("Please enter a new name");
-            list.add(name);
             phoneNumber = input.getString("Please enter a phone number for " + name + ".");
-            list.add(phoneNumber);
+//            list.add(phoneNumber);
+            ArrayList.add(name, phoneNumber);
 
         }while(input.yesNo("Do you want to add another name and number"));
         return list;
     }
 
-    private static void searchbyName(String directory, String filename) {
+    public static void searchByName(String directory, String filename) throws IOException {
         String userName = getString();
-        if (userName.equalsIgnoreCase(list)) {
-            System.out.println(userName);
+        String n = String.valueOf(createList(directory, filename));
+        if (userName.equalsIgnoreCase(n.)) {
+//            List finalName = createList(directory, filename);
+            System.out.println(String.valueOf(createList(directory, filename);
         }else
             System.out.println("Contact not found");
     }
 
-    private static String getString() {
+    public static String getString() {
         Input input = new Input();
         String userName = input.getString("Please enter a contact name");
         return userName;
