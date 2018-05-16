@@ -26,7 +26,7 @@ public class ContactsManager {
         int select = userChoice.getInt();
 
         if(select == 1){
-            System.out.println("Hello");
+            System.out.println(filename);
         }
 //        createFileIfNonExists(directory, filename);
     }
