@@ -26,6 +26,11 @@ public class ContactsManager {
         int select = userChoice.getInt();
 
         if(select == 1){
+            try {
+                readLines(directory, filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println(filename);
         }
         createFileIfNoneExists(directory, filename);
@@ -79,7 +84,7 @@ public class ContactsManager {
         String name;
         String phoneNumber;
         do {
-            name = input.getString("Please enter a new name and phone number");
+            name = input.getString("Please enter a new name");
             list.add(name);
             phoneNumber = input.getString("Please enter a phone number for " + name + ".");
             list.add(phoneNumber);
