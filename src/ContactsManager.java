@@ -91,12 +91,12 @@ public class ContactsManager {
         }
     }
 
-    public static List<String> createList (String directory, String filename) throws IOException {
+    public static ArrayList<String> createList (String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
-        List<String> list = Files.readAllLines(filepath);
-        for(String line: list){
-            System.out.println(line);
-        }
+        ArrayList<String> list = (ArrayList<String>) Files.readAllLines(filepath);
+//        for(String line: list){
+//            System.out.println(line);
+//        }
         return list;
     }
     public static ArrayList<String> createContact() {
@@ -124,15 +124,23 @@ public class ContactsManager {
     }
 
     public static void searchByName(String directory, String filename) throws IOException {
+        ArrayList<String> list = createList(directory, filename);
         String userName = getString();
 //         ArrayList<String> list = createContact();
-        String n = String.valueOf(createList(directory, filename));
-        if (userName.equalsIgnoreCase()) {
-//            List finalName = createList(directory, filename);
-            System.out.println(String.valueOf(userName));
-            System.out.println(String.valueOf(userName+1));
-        }else
-            System.out.println("Contact not found" + String.valueOf(userName) );
+//        String n = (createList(directory, filename));
+        for (int i = 0; i<list.size(); i++){
+            if(userName.equalsIgnoreCase(list.get(i))){
+            System.out.println(list.get(i));
+            System.out.println(list.get(i+1));
+        } else{
+                System.out.println("");
+            }};
+//        if (userName.equalsIgnoreCase(n.)) {
+////            List finalName = createList(directory, filename);
+//            System.out.println(String.valueOf(userName));
+//            System.out.println(String.valueOf(userName+1));
+//        }else
+//            System.out.println("Contact not found" + String.valueOf(userName) );
     }
 
     public static String getString() {
