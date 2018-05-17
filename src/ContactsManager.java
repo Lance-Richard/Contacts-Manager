@@ -128,19 +128,29 @@ public class ContactsManager {
         String userName = getString();
 //         ArrayList<String> list = createContact();
 //        String n = (createList(directory, filename));
-        for (int i = 0; i<list.size(); i++){
-            if(userName.equalsIgnoreCase(list.get(i))){
-            System.out.println(list.get(i));
-            System.out.println(list.get(i+1));
-        } else{
-                System.out.println("");
-            }};
+        try {
+            for (int i = 0; i <= list.size(); i++) {
+                if (!userName.equalsIgnoreCase(list.get(i))) {
+                    continue;
+                }
+                if (userName.equalsIgnoreCase(list.get(i))) {
+                    System.out.println(list.get(i));
+                    System.out.println(list.get(i + 1));
+                    break;
+                }
+//                if (i == list.size()) {
+//                }
+            }
 //        if (userName.equalsIgnoreCase(n.)) {
 ////            List finalName = createList(directory, filename);
 //            System.out.println(String.valueOf(userName));
 //            System.out.println(String.valueOf(userName+1));
 //        }else
 //            System.out.println("Contact not found" + String.valueOf(userName) );
+        } catch (Exception e){
+            System.out.println("User not found");
+            searchByName(directory, filename);
+        }
     }
 
     public static String getString() {
