@@ -12,11 +12,11 @@ import util.Input;
 
 public class ContactsManager {
 
-    public static ArrayList<Contact> newArrayList = new ArrayList<>();
+    public static ArrayList<Contact> newArrayList = new ArrayList<Contact>();
+     public static   String directory = "data";
+     public static   String filename = "contacts.txt";
 
     public static void main(String[] args) {
-        String directory = "data";
-        String filename = "contacts.txt";
         Input userChoice = new Input();
 
         System.out.println("1. View contacts.\n" +
@@ -107,21 +107,32 @@ public class ContactsManager {
         do {
             name = input.getString("Please enter a new name");
             phoneNumber = input.getString("Please enter a phone number for " + name + ".");
-//            list.add(phoneNumber);
-            ArrayList.add(name, phoneNumber);
+            list.add(name);
+            list.add(phoneNumber);
+
+            System.out.println(name);
+
 
         }while(input.yesNo("Do you want to add another name and number"));
+        try {
+            writeListToFile(list,directory,filename );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(list);
         return list;
     }
 
     public static void searchByName(String directory, String filename) throws IOException {
         String userName = getString();
+//         ArrayList<String> list = createContact();
         String n = String.valueOf(createList(directory, filename));
-        if (userName.equalsIgnoreCase(n.)) {
+        if (userName.equalsIgnoreCase()) {
 //            List finalName = createList(directory, filename);
-            System.out.println(String.valueOf(createList(directory, filename);
+            System.out.println(String.valueOf(userName));
+            System.out.println(String.valueOf(userName+1));
         }else
-            System.out.println("Contact not found");
+            System.out.println("Contact not found" + String.valueOf(userName) );
     }
 
     public static String getString() {
