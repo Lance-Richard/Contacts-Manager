@@ -5,21 +5,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-
 import util.Input;
 
 public class ContactsManager {
-
-    public static ArrayList<Contact> newArrayList = new ArrayList<Contact>();
-    public static String directory = "data";
-    public static String filename = "contacts.txt";
-
+    private static String directory = "data";
+    private static String filename = "contacts.txt";
     public static void main(String[] args) {
         appBody();
-//        createFileIfNoneExists(directory, filename);
     }
 
-    public static void appBody() {
+    private static void appBody() {
         Input userChoice = new Input();
         System.out.println("1. View contacts.\n" +
                 "2. Add a new contact.\n" +
@@ -59,44 +54,18 @@ public class ContactsManager {
         appBody();
     }
 
-//    public static void createFileIfNoneExists(String directory, String filename) {
-//        ArrayList<String> names = createContact();
-//        try {
-//            writeListToFile(names, directory, filename);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        try {
-//            viewContacts(directory, filename);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        Path dataDirectory = Paths.get(directory);
-//        Path dataFile = Paths.get(directory, filename);
-//        try {
-//            if (Files.notExists(dataDirectory)) {
-//                Files.createDirectories(dataDirectory);
-//            }
-//            if (Files.notExists(dataFile)) {
-//                Files.createFile(dataFile);
-//            }
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
-    public static void writeListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
+    private static void writeListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         Files.write(filepath, names, StandardOpenOption.APPEND);
     }
 
 
-    public static void reWriteListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
+    private static void reWriteListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         Files.write(filepath, names);
     }
 
-    public static void viewContacts(String directory, String filename) throws IOException {
+    private static void viewContacts(String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
         System.out.println("Name           |   Phone Number");
@@ -109,17 +78,17 @@ public class ContactsManager {
                 }
             }
         } catch (Exception e) {
-            System.out.println("");
+            System.out.println();
         }
     }
 
-    public static ArrayList<String> createList(String directory, String filename) throws IOException {
+    private static ArrayList<String> createList(String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(filepath);
         return list;
     }
 
-    public static ArrayList<String> createContact() {
+    private static void createContact() {
         ArrayList<String> list = new ArrayList<>();
         Input input = new Input();
         String name;
@@ -143,10 +112,10 @@ public class ContactsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return list;
+//        return list;
     }
 
-    public static void searchByName(String directory, String filename) throws IOException {
+    private static void searchByName(String directory, String filename) throws IOException {
         ArrayList<String> list = createList(directory, filename);
         String userName = getString();
         try {
@@ -166,7 +135,7 @@ public class ContactsManager {
         }
     }
 
-    public static void removeByName(String directory, String filename) throws IOException {
+    private static void removeByName(String directory, String filename) throws IOException {
         ArrayList<String> list = createList(directory, filename);
         String userName = getString();
         try {
@@ -208,7 +177,7 @@ public class ContactsManager {
         }
     }
 
-    public static String getString() {
+    private static String getString() {
         Input input = new Input();
         String userName = input.getString("Please enter a contact name");
         return userName;
