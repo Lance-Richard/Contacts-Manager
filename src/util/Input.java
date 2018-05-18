@@ -26,7 +26,7 @@ public class Input {
     }
 
     public int getInt(int min, int max) {
-        System.out.println("Please, enter an integer between " + min + " and " + max + ".");
+        System.out.println("Please, enter an integer between " + (min+1) + " and " + (max-1)  + ".");
         String s = this.scanner.nextLine();
         int input;
         try {
