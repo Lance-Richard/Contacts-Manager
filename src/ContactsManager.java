@@ -1,5 +1,3 @@
-//import jdk.internal.util.xml.impl.Input;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,88 +11,76 @@ import util.Input;
 public class ContactsManager {
 
     public static ArrayList<Contact> newArrayList = new ArrayList<Contact>();
-     public static   String directory = "data";
-     public static   String filename = "contacts.txt";
+    public static String directory = "data";
+    public static String filename = "contacts.txt";
 
     public static void main(String[] args) {
         appBody();
         createFileIfNoneExists(directory, filename);
+    }
+
+    public static void appBody() {
+        Input userChoice = new Input();
+        System.out.println("1. View contacts.\n" +
+                "2. Add a new contact.\n" +
+                "3. Search a contact by name.\n" +
+                "4. Delete an existing contact.\n" +
+                "5. Exit.\n" +
+                "Enter an option (1, 2, 3, 4 or 5):");
+        int select = userChoice.getInt();
+        if (select == 1) {
+            try {
+                viewContacts(directory, filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        public static void appBody(){
-            Input userChoice = new Input();
-
-            System.out.println("1. View contacts.\n" +
-                    "2. Add a new contact.\n" +
-                    "3. Search a contact by name.\n" +
-                    "4. Delete an existing contact.\n" +
-                    "5. Exit.\n" +
-                    "Enter an option (1, 2, 3, 4 or 5):");
-            int select = userChoice.getInt();
-            if (select == 1) {
-                    try {
-                        viewContacts(directory, filename);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-//                appBody();
-            }
-            if (select == 2) {
-                createContact();
-                appBody();
-            }
-            if (select == 3) {
-                try {
-                    searchByName(directory, filename);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-
-                }
-//                appBody();
-            }
-            if (select == 4) {
-                try {
-                    removeByName(directory, filename);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//                appBody();
-
-            }
-            if (select == 5){
-                System.out.println("Thank you for using Contacts Manager");
-                System.exit(0);
-            }
-            appBody();
+        if (select == 2) {
+            createContact();
         }
-
+        if (select == 3) {
+            try {
+                searchByName(directory, filename);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        if (select == 4) {
+            try {
+                removeByName(directory, filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (select == 5) {
+            System.out.println("Thank you for using Contacts Manager");
+            System.exit(0);
+        }
+        appBody();
+    }
 
     public static void createFileIfNoneExists(String directory, String filename) {
         ArrayList<String> names = createContact();
-        try{
+        try {
             writeListToFile(names, directory, filename);
-        } catch(IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
         try {
             viewContacts(directory, filename);
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
-
         try {
-            if(Files.notExists(dataDirectory)){
+            if (Files.notExists(dataDirectory)) {
                 Files.createDirectories(dataDirectory);
             }
-
-            if(Files.notExists(dataFile)){
+            if (Files.notExists(dataFile)) {
                 Files.createFile(dataFile);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -110,22 +96,29 @@ public class ContactsManager {
         Files.write(filepath, names);
     }
 
-    public static void viewContacts(String directory, String filename) throws IOException{
+    public static void viewContacts(String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
-        for(String name : list){
-            System.out.println(name);
+        System.out.println("Name       |  Phone Number");
+        System.out.println("--------------------------");
+        try {
+            for (int i = 0; i <= list.size(); i++) {
+                if (i % 2 == 0) {
+                    System.out.println(list.get(i) + "       |    " + list.get(i + 1));
+                    System.out.println();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public static ArrayList<String> createList (String directory, String filename) throws IOException {
+    public static ArrayList<String> createList(String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         ArrayList<String> list = (ArrayList<String>) Files.readAllLines(filepath);
-//        for(String line: list){
-//            System.out.println(line);
-//        }
         return list;
     }
+
     public static ArrayList<String> createContact() {
         ArrayList<String> list = new ArrayList<>();
         Input input = new Input();
@@ -137,29 +130,18 @@ public class ContactsManager {
             list.add(name);
             list.add(phoneNumber);
             System.out.println(name);
-
-//            try {
-//                writeListToFile(list, directory, filename);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-        }while(input.yesNo("Do you want to add another name and number"));
-//        appBody();
+        } while (input.yesNo("Do you want to add another name and number"));
         try {
-            writeListToFile(list,directory,filename );
+            writeListToFile(list, directory, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println(list);
-//        appBody();
         return list;
     }
 
     public static void searchByName(String directory, String filename) throws IOException {
         ArrayList<String> list = createList(directory, filename);
         String userName = getString();
-
         try {
             for (int i = 0; i <= list.size(); i++) {
                 if (!userName.equalsIgnoreCase(list.get(i))) {
@@ -170,8 +152,8 @@ public class ContactsManager {
                     System.out.println(list.get(i + 1));
                     break;
                 }
-             }
-        } catch (Exception e){
+            }
+        } catch (Exception e) {
             System.out.println("User not found");
             searchByName(directory, filename);
         }
@@ -180,7 +162,6 @@ public class ContactsManager {
     public static void removeByName(String directory, String filename) throws IOException {
         ArrayList<String> list = createList(directory, filename);
         String userName = getString();
-
         try {
             for (int i = 0; i <= list.size(); i++) {
                 if (!userName.equalsIgnoreCase(list.get(i))) {
@@ -190,25 +171,20 @@ public class ContactsManager {
                     list.remove(i);
                     list.remove(i);
                     System.out.println(list);
-
-                    recreateFile(directory,filename,list);
-
-//                    System.out.println(list.get(i));
-//                    System.out.println(list.get(i + 1));
+                    recreateFile(directory, filename, list);
                     break;
                 }
-             }
-        } catch (Exception e){
+            }
+        } catch (Exception e) {
             System.out.println("User not found");
             searchByName(directory, filename);
         }
     }
 
-    private static void recreateFile(String directory, String filename,ArrayList list) {
+    private static void recreateFile(String directory, String filename, ArrayList list) {
         ArrayList<String> names = list;
-            Path filepath = Paths.get(directory, filename);
+        Path filepath = Paths.get(directory, filename);
         try {
-//            Files.write(filepath,names,StandardOpenOption.CREATE);
             Files.write(filepath, names, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,14 +194,11 @@ public class ContactsManager {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
         try {
             viewContacts(directory, filename);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 
     public static String getString() {
@@ -233,5 +206,4 @@ public class ContactsManager {
         String userName = input.getString("Please enter a contact name");
         return userName;
     }
-
-    }
+}
