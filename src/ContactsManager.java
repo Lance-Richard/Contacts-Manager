@@ -17,8 +17,8 @@ public class ContactsManager {
      public static   String filename = "contacts.txt";
 
     public static void main(String[] args) {
-        createFileIfNoneExists(directory, filename);
         appBody();
+        createFileIfNoneExists(directory, filename);
         }
 
         public static void appBody(){
@@ -37,18 +37,20 @@ public class ContactsManager {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                appBody();
+//                appBody();
             }
             if (select == 2) {
                 createContact();
-//                appBody();
+                appBody();
             }
             if (select == 3) {
                 try {
                     searchByName(directory, filename);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
+
                 }
+//                appBody();
             }
             if (select == 4) {
                 try {
@@ -56,11 +58,14 @@ public class ContactsManager {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//                appBody();
+
             }
             if (select == 5){
                 System.out.println("Thank you for using Contacts Manager");
                 System.exit(0);
             }
+            appBody();
         }
 
 
@@ -133,19 +138,19 @@ public class ContactsManager {
             list.add(phoneNumber);
             System.out.println(name);
 
-            try {
-                writeListToFile(list, directory, filename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                writeListToFile(list, directory, filename);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
         }while(input.yesNo("Do you want to add another name and number"));
 //        appBody();
-//        try {
-//            writeListToFile(list,directory,filename );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            writeListToFile(list,directory,filename );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        System.out.println(list);
 //        appBody();
         return list;
