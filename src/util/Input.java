@@ -1,5 +1,6 @@
 package util;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Input {
@@ -84,4 +85,6 @@ public class Input {
         }
         return num;
     }
+
+
 }

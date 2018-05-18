@@ -16,7 +16,7 @@ public class ContactsManager {
 
     public static void main(String[] args) {
         appBody();
-        createFileIfNoneExists(directory, filename);
+//        createFileIfNoneExists(directory, filename);
     }
 
     public static void appBody() {
@@ -59,31 +59,31 @@ public class ContactsManager {
         appBody();
     }
 
-    public static void createFileIfNoneExists(String directory, String filename) {
-        ArrayList<String> names = createContact();
-        try {
-            writeListToFile(names, directory, filename);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
-            viewContacts(directory, filename);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        Path dataDirectory = Paths.get(directory);
-        Path dataFile = Paths.get(directory, filename);
-        try {
-            if (Files.notExists(dataDirectory)) {
-                Files.createDirectories(dataDirectory);
-            }
-            if (Files.notExists(dataFile)) {
-                Files.createFile(dataFile);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public static void createFileIfNoneExists(String directory, String filename) {
+//        ArrayList<String> names = createContact();
+//        try {
+//            writeListToFile(names, directory, filename);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        try {
+//            viewContacts(directory, filename);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        Path dataDirectory = Paths.get(directory);
+//        Path dataFile = Paths.get(directory, filename);
+//        try {
+//            if (Files.notExists(dataDirectory)) {
+//                Files.createDirectories(dataDirectory);
+//            }
+//            if (Files.notExists(dataFile)) {
+//                Files.createFile(dataFile);
+//            }
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     public static void writeListToFile(ArrayList<String> names, String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
@@ -99,17 +99,17 @@ public class ContactsManager {
     public static void viewContacts(String directory, String filename) throws IOException {
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
-        System.out.println("Name       |  Phone Number");
-        System.out.println("--------------------------");
+        System.out.println("Name           |   Phone Number");
+        System.out.println("-------------------------------");
         try {
             for (int i = 0; i <= list.size(); i++) {
                 if (i % 2 == 0) {
-                    System.out.println(list.get(i) + "       |    " + list.get(i + 1));
+                    System.out.printf("%-15s| %-15s",list.get(i), list.get(i + 1));
                     System.out.println();
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("");
         }
     }
 
@@ -126,7 +126,14 @@ public class ContactsManager {
         String phoneNumber;
         do {
             name = input.getString("Please enter a new name");
+            name = name.substring(0,1).toUpperCase()+name.substring(1);
             phoneNumber = input.getString("Please enter a phone number for " + name + ".");
+            if (phoneNumber.length() == 10) {
+                phoneNumber = phoneNumber.substring(0, 3) + "-" + phoneNumber.substring(3, 6) + "-" + phoneNumber.substring(6);
+            } else {
+                System.out.println("Please Enter a 10 digit phone number");
+                createContact();
+            }
             list.add(name);
             list.add(phoneNumber);
             System.out.println(name);
