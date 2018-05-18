@@ -17,26 +17,31 @@ public class ContactsManager {
      public static   String filename = "contacts.txt";
 
     public static void main(String[] args) {
-        Input userChoice = new Input();
+        createFileIfNoneExists(directory, filename);
+        appBody();
+        }
 
+        public static void appBody(){
+            Input userChoice = new Input();
 
-        System.out.println("1. View contacts.\n" +
-                "2. Add a new contact.\n" +
-                "3. Search a contact by name.\n" +
-                "4. Delete an existing contact.\n" +
-                "5. Exit.\n" +
-                "Enter an option (1, 2, 3, 4 or 5):");
-        int select = userChoice.getInt();
+            System.out.println("1. View contacts.\n" +
+                    "2. Add a new contact.\n" +
+                    "3. Search a contact by name.\n" +
+                    "4. Delete an existing contact.\n" +
+                    "5. Exit.\n" +
+                    "Enter an option (1, 2, 3, 4 or 5):");
+            int select = userChoice.getInt();
             if (select == 1) {
-                try {
-                    readLines(directory, filename);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//            System.out.println(filename);
+                    try {
+                        viewContacts(directory, filename);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                appBody();
             }
             if (select == 2) {
                 createContact();
+//                appBody();
             }
             if (select == 3) {
                 try {
@@ -52,7 +57,10 @@ public class ContactsManager {
                     e.printStackTrace();
                 }
             }
-//        createFileIfNoneExists(directory, filename);
+            if (select == 5){
+                System.out.println("Thank you for using Contacts Manager");
+                System.exit(0);
+            }
         }
 
 
@@ -65,7 +73,7 @@ public class ContactsManager {
         }
 
         try {
-            readLines(directory, filename);
+            viewContacts(directory, filename);
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -97,7 +105,7 @@ public class ContactsManager {
         Files.write(filepath, names);
     }
 
-    public static void readLines(String directory, String filename) throws IOException{
+    public static void viewContacts(String directory, String filename) throws IOException{
         Path filepath = Paths.get(directory, filename);
         List<String> list = Files.readAllLines(filepath);
         for(String name : list){
@@ -123,17 +131,23 @@ public class ContactsManager {
             phoneNumber = input.getString("Please enter a phone number for " + name + ".");
             list.add(name);
             list.add(phoneNumber);
-
             System.out.println(name);
 
+            try {
+                writeListToFile(list, directory, filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }while(input.yesNo("Do you want to add another name and number"));
-        try {
-            writeListToFile(list,directory,filename );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(list);
+//        appBody();
+//        try {
+//            writeListToFile(list,directory,filename );
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(list);
+//        appBody();
         return list;
     }
 
@@ -201,7 +215,7 @@ public class ContactsManager {
         }
 
         try {
-            readLines(directory, filename);
+            viewContacts(directory, filename);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
